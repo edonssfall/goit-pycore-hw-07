@@ -59,7 +59,7 @@ class Record:
             to_remove = self.find_index(new)
 
         index = self.find_index(old)
-        if not index is None:
+        if index is not None:
             self.phones[index] = Phone(new)
             if not to_remove is None and index != to_remove:
                 self.phones.pop(to_remove)
@@ -73,10 +73,9 @@ class Record:
         """
         return self.phones[self.find_index(phone)]
 
-    def remove_phone(self, phone: str, index: int | None) -> Phone:
+    def remove_phone(self, phone: str) -> Phone:
         """
         remove a phone from the contact
-        :param index:
         :param phone: phone number: str
         :return: removed Phone object; raises ValueError if not found
         """

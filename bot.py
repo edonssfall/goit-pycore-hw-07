@@ -106,8 +106,8 @@ def show_birthday(args: list, book: AddressBook) -> str:
         raise ValueError('Need 1 argument.\nUsage: show-birthday <name>')
 
     if rec := book.find(name):
-        if birthday := getattr(rec, 'birthday'):
-            return birthday
+        if rec.birthday:
+            return str(rec.birthday)
         raise ValueError('Birthday not found.')
     raise KeyError
 
@@ -137,7 +137,7 @@ def show_all(_, book: AddressBook) -> str:
         return ''.join(
             f"{Fore.BLUE if i % 2 == 0 else Fore.YELLOW}{record}\n"
             for i, record in enumerate(book.values())
-        )
+        ).rstrip()
     return 'Nothing to show, because DB is empty.'
 
 

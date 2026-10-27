@@ -1,6 +1,6 @@
 import re
 
-from datetime import datetime
+from datetime import datetime, date
 
 
 class Field:
@@ -73,3 +73,14 @@ class Birthday(Field):
         show the birthday in the same format the user enters it: DD.MM.YYYY
         """
         return datetime.strftime(self.value, self.FORMAT)
+
+    def replace_year(self, year: int) -> date:
+        """
+        the birthday date moved to another year; Feb 29 becomes Mar 1 in a non-leap year
+        :param year: target year: int
+        :return: date
+        """
+        try:
+            return self.value.replace(year=year)
+        except ValueError:
+            return self.value.replace(year=year, month=3, day=1)

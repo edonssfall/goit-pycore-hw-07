@@ -51,25 +51,19 @@ class AddressBook(UserDict):
         res = list()
 
         for user in self.data.values():
-            try:
-                if birthday := getattr(user, 'birthday'):
-                    for year in (today.year - 1, today.year, today.year + 1):
-                        try:
-                            birthday_year = birthday.value.replace(year=year)
-                        except ValueError:
-                            birthday_year = birthday.value.replace(year=year, month=3, day=1)
+            if user.birthday:
+                for year in (today.year - 1, today.year, today.year + 1):
+                    birthday_year = user.birthday.replace_year(year)
 
-                        in_window = birthday_year >= today and 0 <= (birthday_year - today).days < days
+                    in_window = birthday_year >= today and 0 <= (birthday_year - today).days < days
 
-                        past_weekend = today.weekday() == 0 and -2 <= (birthday_year - today).days < 0
+                    past_weekend = today.weekday() == 0 and -2 <= (birthday_year - today).days < 0
 
-                        if in_window or past_weekend:
-                            bday = birthday_year + timedelta(
-                                days=7 - birthday_year.weekday()) if birthday_year.weekday() >= 5 else birthday_year
-                            res.append({
-                                'name': user.name,
-                                'congratulation_date': datetime.strftime(bday, birthday.FORMAT),
-                            })
-            except ValueError as e:
-                print(f'Error get_upcoming_birthdays: {e}')
+                    if in_window or past_weekend:
+                        bday = birthday_year + timedelta(
+                            days=7 - birthday_year.weekday()) if birthday_year.weekday() >= 5 else birthday_year
+                        res.append({
+                            'name': user.name,
+                            'congratulation_date': datetime.strftime(bday, user.birthday.FORMAT),
+                        })
         return res
