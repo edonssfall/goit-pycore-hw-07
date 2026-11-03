@@ -37,6 +37,6 @@ python main.py
 ## Structure
 
 - `main.py` — entry point, request-response loop
-- `bot.py` — command handlers and the `ACTIONS` table
+- `bot.py` — `Bot` class: keeps the `AddressBook`, command handlers as methods, the command table
 - `database/` — `Field`, `Name`, `Phone`, `Birthday`, `Record`, `AddressBook`
-- `utils/` — `input_error` decorator
+- `utils/` — `input_error` (turns errors into messages) and `validate_args` (checks the number of args) decorators

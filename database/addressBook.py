@@ -39,16 +39,16 @@ class AddressBook(UserDict):
             return record
         return None
 
-    def get_upcoming_birthdays(self, today=datetime.today().date(), days: int = 7) -> list[
+    def get_upcoming_birthdays(self, days: int = 7) -> list[
         dict[str, str]]:
         """
         contacts with a birthday in the next `days` days; weekend ones move to Monday,
         on Monday the past weekend ones are congratulated too. Contacts without a birthday are skipped.
-        :param today: date to count from (default is evaluated once, at import)
         :param days: window length, today included
         :return: [{"name": <Name>, "congratulation_date": <DD.MM.YYYY>}, ...]
         """
         res = list()
+        today = datetime.today().date()
 
         for user in self.data.values():
             if user.birthday:

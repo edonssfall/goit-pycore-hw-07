@@ -2,8 +2,7 @@ import sys
 
 from colorama import Fore, init
 
-from database import AddressBook
-from bot import ACTIONS, parse_input
+from bot import Bot
 
 
 def main():
@@ -11,17 +10,11 @@ def main():
     chatbot entry point: request-response loop; also catches errors outside handlers (empty input, exit, EOF)
     """
     print("Welcome to the assistant bot!")
-    book = AddressBook()
+    bot = Bot()
     while True:
         try:
             user_input = input("Enter a command: ")
-            cmd, *args = parse_input(user_input)
-
-            if handler := ACTIONS.get(cmd):
-                print(handler(args, book))
-
-            else:
-                print(Fore.RED + 'Invalid command.')
+            print(bot(user_input))
         except EOFError:
             print('\nGood bye!')
             sys.exit()
